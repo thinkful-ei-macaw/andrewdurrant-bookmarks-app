@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://kit.fontawesome.com/f3f6e950df.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="./wireframe.css">
+</head>
+<body>
+  <main>
+    <section class="page landing-page">
+      <div class="app-name"><h1>My Bookmarks</h1></div>
+      <article class="actions">
+        <button class="add-bookmark-clicked">New Bookmark</button>
+        <form class="rating-dropdown" action="">
+          <label class="rating-label" for="rating">Minimum Rating</label>
+          <select class="select-rating" id="rating" name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </form>
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">FlavioCopes</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Javascript Info</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Medium</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Thinkful Dashboard</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Git Cheat sheet</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Javascript Syntax Reference</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">CSS Tricks</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">React Cheat Sheet</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Postman</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+    </section>
+
+    <section class="code-block">
+      <pre>
+        <code>
+          const store = {
+            bookmarks: [
+              {
+                id: 'x56w',
+                title: 'Title 1',
+                rating: 3,
+                url: 'http://www.title1.com',
+                description: 'lorem ipsum dolor sit',
+                expanded: false
+              },
+              {
+                id: '6ffw',
+                title: 'Title 2',
+                rating: 5,
+                url: 'http://www.title2.com',
+                description: 'dolorum tempore deserunt',
+                expanded: false
+              } 
+              ...
+            ],
+            adding: false,
+            error: null,
+            filter: 0
+          };
+        </code>
+      </pre>
+  </section>
+
+    <section class="page add-bookmark">
+      <div class="app-name"><h1 tabindex="0">My Bookmarks</h1></div>
+      <h3>Create A Bookmark:</h3>
+      <form action="#" class="new-bookmark">
+          <div>
+            <label for="title">Title:</label><br>
+            <input type="text" id="title">
+          </div>
+          <div>
+            <label for="url">URL:</label><br>
+            <input type="text" id="url">
+          </div>
+          <!-- This div for text field may not be hooked up right. Had to change it from input to textarea to make it bigger -->
+          <div>
+            <label for="description">Description:</label><br>
+            <textarea type="text" id="description" name="description" cols="200" rows="10"></textarea>
+          </div>
+          <div class="radio-div">
+            <div class="radio-btn">
+              <input type="radio" id="5-star" name="5-star" value="5">
+              <label for="5-star">5 Stars</label><br>
+            </div>
+            <div class="radio-btn">
+              <input type="radio" id="4-star" name="4-star" value="4">
+              <label for="4-star">4 Stars</label><br>
+            </div>
+            <div class="radio-btn">
+              <input type="radio" id="3-star" name="3-star" value="3">
+              <label for="3-star">3 Stars</label><br>
+            </div>
+            <div class="radio-btn">
+              <input type="radio" id="2-star" name="2-star" value="2">
+              <label for="2-star">2 Stars</label><br>
+            </div>
+            <div class="radio-btn">
+              <input type="radio" id="1-star" name="1-star" value="1">
+              <label for="1-star">1 Star</label>
+            </div>
+          </div>
+        <input type="submit">
+      </form>
+    </section>
+
+    <section class="code-block">
+      <pre>
+        <code>
+          const store = {
+            bookmarks: [...],
+            adding: true,
+            error: null,
+            filter: 0
+          };          
+        </code>
+      </pre>
+    </section>
+
+    <section class="page bookmark-clicked">
+      <div class="app-name"><h1>My Bookmarks</h1></div>
+      <article class="actions">
+        <button class="add-bookmark-clicked">New Bookmark</button>
+        <form class="rating-dropdown" action="">
+          <label class="rating-label" for="rating">Minimum Rating</label>
+          <select class="select-rating" id="rating" name="rating">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </form>
+      </article>
+      <article class="bookmark-card expand">
+        <h4 class="title">FlavioCopes</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></span>
+        <h4>Description</h4>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum consequuntur facere, sint ducimus quos cum enim rerum vitae nihil esse ratione neque voluptatem nobis eos nisi, temporibus voluptatibus illum distinctio.</p>
+        <h4><a href="#">URL</a></h4>
+        <button name="delete"><i class="far fa-trash-alt"></i></i></button>
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Javascript Info</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Medium</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Thinkful Dashboard</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Git Cheat sheet</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+      <article class="bookmark-card">
+        <h4 class="title">Javascript Syntax Reference</h4>
+        <span class="rating"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></span>
+        <!-- <h4>Description</h4> -->
+        <!-- <h4><a>URL</a></h4> -->
+      </article>
+    </section>
+
+    <section class="code-block">
+      <pre>
+        <code>
+          const store = {
+            bookmarks: [
+              {
+                id: '7ddr',
+                title: 'Title 11',
+                rating: 5,
+                url: 'http://www.title11.com',
+                description: 'lorem ipsum dolor',
+                expanded: true
+              }
+              ...
+            ],
+            adding: false,
+            error: null,
+            filter: 0
+          };           
+        </code>
+      </pre>
+    </section>
+  </main>
+</body>
+</html>

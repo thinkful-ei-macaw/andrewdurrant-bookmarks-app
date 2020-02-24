@@ -1,0 +1,101 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  margin: 1rem;
+}
+
+.app-name {
+  text-align: center;
+  margin: 1rem;
+}
+
+.page {
+  margin: 1rem;
+  min-height: 40rem;
+  border: #337 solid .3rem;
+}
+
+.landing-page .bookmark-card {
+  margin: 1rem;
+  padding: .5rem;
+  border: #444 solid .2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.actions {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #bdc5ce;
+}
+.add-bookmark-clicked {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.rating-dropdown {
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+.rating-label {
+  font-size: 1rem;
+}
+
+.select-rating {
+  font-size: 1rem;
+}
+
+.title {
+  /* display: inline-block; */
+  margin-right: 1rem;
+  color: green;
+}
+
+.rating {
+  /* display: inline-block */
+}
+
+.code-block {
+  background: rgb(229, 229, 236);
+}
+
+.new-bookmark {
+  margin: 3rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+#description {
+  width: 100%;
+}
+.radio-div {
+  display: flex;
+  justify-content: space-around;
+}
+
+.radio-btn {
+  margin-right: 1rem;
+}
+
+.bookmark-clicked .bookmark-card {
+  margin: 1rem;
+  padding: .5rem;
+  border: #444 solid .2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.bookmark-clicked .expand {
+  margin: 1rem;
+  padding: .5rem;
+  border: #444 solid .2rem;
+  height: 75%;
+  display: block;
+}
