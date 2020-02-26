@@ -119,7 +119,7 @@ const generateNewBookmarkForm = function () {
 const generateErrorMessage = function () {
   return `
   <section class="error-message">
-    <h4></h4>
+    <h4>${store.error}</h4>
   </section>
   `;
 };
@@ -224,12 +224,14 @@ let fillerImage = `<img class="fillerImage" src="https://images.unsplash.com/pho
 
 const render = function () {
   // let bookmarks = [...store.bookmarks];
-  let error = store.error;
   
   // Filter does not reset. need to figure that out
   let bookmarks = store.filterBookmarks();
 
   // Write a func that checks for error in store
+  if (store.error) {
+
+  }
 
   let page = '';
   page += generateLandingPage();

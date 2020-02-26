@@ -116,3 +116,9 @@ h3 {
   min-width: 2rem;
   border: none;
 }
+
+.error-message {
+  background-color: whitesmoke;
+  color: orangered;
+  padding: 1rem;
+}
