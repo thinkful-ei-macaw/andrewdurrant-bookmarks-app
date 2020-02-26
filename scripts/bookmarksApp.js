@@ -140,11 +140,11 @@ const handleBookmarkClicked = function () {
   // });
 };
 
-// const getItemIdFromElement = function (item) {
-//   return $(item)
-//     .closest('.bookmark-card')
-//     .data('id');
-// };
+const getItemIdFromElement = function (item) {
+  return $(item)
+    .closest('.bookmark-card')
+    .data('id');
+};
 
 function serializeJson(form) {
   const formData = new FormData(form[0]);
@@ -170,6 +170,23 @@ const handleNewBookmarkSubmit = function () {
         store.setError(error.message);
         render();
         console.log('oops');
+      });
+  });
+};
+
+const handleDeleteClicked = function () {
+  $( 'main' ).on('click', '.delete-btn', event => {
+    const id = getItemIdFromElement(event.currentTarget);
+    console.log(id);
+    
+    api.deleteBookmark(id)
+      .then(() => {
+        store.findAndDelete(id);
+        render();
+      })
+      .catch((error) => {
+        store.setError(error.message);
+        render();
       });
   });
 };
@@ -205,6 +222,7 @@ const bindEventListeners = function () {
   handleBookmarkClicked();
   handleNewBookmarkSubmit();
   handleCancelClicked();
+  handleDeleteClicked();
 };
 
 export default{
