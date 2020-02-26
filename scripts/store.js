@@ -1,6 +1,8 @@
 const bookmarks = [];
+
 let error = null;
 let ratingFilter = 0;
+let addingBookmark = false;
 
 
 const findById = function (id) {
@@ -8,8 +10,10 @@ const findById = function (id) {
 };
 
 const addBookmark = function (bookmark) {
+  bookmark.expanded = false;
   this.bookmarks.push(bookmark);
 };
+
 
 const findAndDelete = function (id) {
   this.bookmarks = this.bookmarks.filter(currentBookmark => currentBookmark.id !== id);
@@ -31,6 +35,7 @@ export default {
   bookmarks, 
   error, 
   ratingFilter,
+  addingBookmark,
   findById,
   addBookmark,
   findAndDelete,

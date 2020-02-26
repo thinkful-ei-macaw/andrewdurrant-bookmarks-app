@@ -1,32 +1,30 @@
 import store from './store.js';
 import api from './api.js';
 
+// This is helpful for debugging. It allows me to type store into the console and it will display everything currently in the store!!
+window.store = store;
 
 
 // Generate Functions:
-const generateLandingPage = function (bookmarks) {
-  // Initial page load of .actions and image
+
+const generateLandingPage = function () {
   return `
-    <h1 class="app-name">My Bookmarks</h1>
-    <article class="actions-box">
-      <button class="add-bookmark-btn">New Bookmark</button>
-      <form class="rating-dropdown" action="">
-        <label class="rating-label" for="rating">Minimum Rating</label>
-        <select class="select-rating" id="rating" name="rating">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </form>
-    </article>
-    <section class="bookmark-container">
-    </section>
-    <section class="bookmark-section">
-      ${generateBookmarksString(bookmarks)}
-    </section>
-    ${generateNewBookmarkForm()}
+  <section class="heading-wrapper">
+  <h1 class="app-name">My Bookmarks</h1>
+</section>
+<section class="actions-box">
+  <button class="new-bookmark-btn">New Bookmark</button>
+  <form class="rating-dropdown" action="">
+    <label class="rating-label" for="rating">Minimum Rating</label>
+    <select class="select-rating" id="rating" name="rating">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </form>
+</section> 
   `; 
 };
 
@@ -47,13 +45,8 @@ const generateRatingString = function (rating) {
 };
 
 const generateBookmarks = function (bookmark) {
-  return `
-  <article class="bookmark-card" data-id="${bookmark.id}">
-    <div class="bookmark-condensed">
-      <h4 class="title">${bookmark.title}</h4>
-      <span class="rating">${generateRatingString(bookmark.rating)}</span>
-    </div>
-    <div class="bookmark-expanded">
+  let condensedBookmark = `
+  <div class="bookmark-expanded">
       <h4>Description</h4>
       <p>${bookmark.desc}</p>
       <div>
@@ -61,13 +54,24 @@ const generateBookmarks = function (bookmark) {
         <button class="delete-btn" name="delete"><i class="far fa-trash-alt"></i></i></button>
       </div>
     </div>
+  `;
+  if (!bookmark.expanded) {
+    condensedBookmark = '';
+  }
+  return `
+  <article class="bookmark-card" data-id="${bookmark.id}">
+    <div class="bookmark-condensed">
+      <h4 class="title">${bookmark.title}</h4>
+      <span class="rating">${generateRatingString(bookmark.rating)}</span>
+    </div>
+    ${condensedBookmark}
   </article>
   `;
 };
 
 const generateNewBookmarkForm = function () {
   return `
-  <section class="page add-bookmark hidden">
+  <section class="add-bookmark">
     <h1 class="app-name">My Bookmarks</h1>
     <h3>Create New:</h3>
     <form action="#" class="new-bookmark" id="submitBookmarkForm">
@@ -112,32 +116,49 @@ const generateNewBookmarkForm = function () {
   `;
 };
 
-
+const generateErrorMessage = function () {
+  return `
+  <section class="error-message">
+    <h4></h4>
+  </section>
+  `;
+};
 
 
 // Handle Functions:
 const handleNewBookmarkClicked = function () {
-  // Renders form for new bookmark submission
-  // This is done by changing bookmarks.newBookmarkClicked = true
-  $( 'main' ).on('click', '.add-bookmark-btn', () => {
-    $('.add-bookmark').toggleClass('hidden');
+  $( 'main' ).on('click', '.new-bookmark-btn', () => {    
+    store.addingBookmark = true;    
+    render();
   });
 };
 
 const handleMinimumRatingClicked = function () {
   //This changes the value of store.bookmarks.ratingFilter to user selected
+  $( 'main' ).on('input', '.select-rating', (e) => {
+    e.preventDefault();
+    let rating = $('.select-rating').val();
+    store.ratingFilter = rating;
+
+    render();
+  });
   
 };
 
 const handleBookmarkClicked = function () {
   // This takes the class of hidden off of the div that surrounds description and url and delete btn
-  // $('.bookmark-section').on('click', '.bookmark-card', event => {
-  //   // get the index of the item in store.items
-  //   console.log('yes')
-  //   const id = getItemIdFromElement(event.currentTarget);
-  //   // delete the item
-  //   console.log(id);
-  // });
+  $('main').on('click', '.bookmark-card', event => {
+
+    let clickedId = getItemIdFromElement(event.currentTarget);
+
+    store.bookmarks.forEach(bookmark => {
+      if (bookmark.id === clickedId) {
+        bookmark.expanded = !bookmark.expanded;
+      }
+    });
+    
+    render();
+  });
 };
 
 const getItemIdFromElement = function (item) {
@@ -157,9 +178,9 @@ const handleNewBookmarkSubmit = function () {
   // This submits the form that turns into a fetch: POST
   $( 'main' ).on('submit', '.new-bookmark', (e) => {
     e.preventDefault();
+    store.addingBookmark = false;
     let form = $('#submitBookmarkForm');
     let formObject = serializeJson(form);
-    console.log(formObject);
     
     api.createBookmark(formObject)
       .then((bookmark) => {
@@ -169,7 +190,7 @@ const handleNewBookmarkSubmit = function () {
       .catch((error) => {
         store.setError(error.message);
         render();
-        console.log('oops');
+        console.log('error has been thrown');
       });
   });
 };
@@ -177,7 +198,6 @@ const handleNewBookmarkSubmit = function () {
 const handleDeleteClicked = function () {
   $( 'main' ).on('click', '.delete-btn', event => {
     const id = getItemIdFromElement(event.currentTarget);
-    console.log(id);
     
     api.deleteBookmark(id)
       .then(() => {
@@ -192,25 +212,40 @@ const handleDeleteClicked = function () {
 };
 
 const handleCancelClicked = function () {
-  // When cancel is clicked, we render the page after setting newBookmarkClicked back to false
   $( 'main' ).on('click', '#cancelBtn', () => {
-    $('.add-bookmark').toggleClass('hidden');
+    store.addingBookmark = false;
+    render();
   });
 };
 
+let fillerImage = `<img class="fillerImage" src="https://images.unsplash.com/photo-1511148776-27c92f27f3b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=933&q=80" alt="bookstore reflection">`;
 
+// Render Function:
 
-// Render Functions:
 const render = function () {
-  let bookmarks = [...store.bookmarks];
+  // let bookmarks = [...store.bookmarks];
   let error = store.error;
-  let ratingFilter = store.ratingFilter;
-
+  
+  // Filter does not reset. need to figure that out
+  let bookmarks = store.filterBookmarks();
 
   // Write a func that checks for error in store
 
-  const landingPage = generateLandingPage(bookmarks);
-  $( 'main' ).html(landingPage);
+  let page = '';
+  page += generateLandingPage();
+
+  if (bookmarks.length < 1) {
+    page += fillerImage;
+  } else {
+    page += generateBookmarksString(bookmarks);
+  }
+
+  if (store.addingBookmark) {
+    page += generateNewBookmarkForm();
+  } 
+
+
+  $( 'main' ).html(page);
 };
 
 

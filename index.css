@@ -7,10 +7,31 @@
 main {
   margin: 1rem 0;
   position: relative;
+  min-height: 100vh;
+  font-family: 'Roboto', ;
+  background: 
+  linear-gradient(
+      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.6)
+    ),
+  url('https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260'); 
+}
+
+
+.app-name {
+  text-align: center;
+  margin: 1rem;
+  font-family: 'Passion One', ;
+  font-weight: 600;
+  font-size: 3rem;
+  color: #fcfafa;
+}
+
+h3 {
+  text-align: center;
 }
 
 .add-bookmark {
-  background-color: #eee;
   position: absolute;
   top: 0;
   left: 0;
@@ -18,6 +39,27 @@ main {
   width: 100%;
   z-index: 100;
   padding: 2rem;
+  background: 
+  linear-gradient(
+      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.6)
+    ),
+  url('https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260');
+  color: #fcfafa;
+}
+
+.new-bookmark-btn {
+  font-size: 1rem;
+  padding: 0.5rem;
+}
+
+.rating-label {
+  font-size: 1rem;
+}
+
+.fillerImage {
+  max-width: 100%;
+  height: auto;
 }
 
 #description {
@@ -29,24 +71,22 @@ main {
   margin: 1rem;
 }
 
+
 .actions-box {
   margin: 1rem 0;
   padding: 1rem;
   display: flex;
   justify-content: space-evenly;
-  background-color: #bdc5ce;
+  align-items: center;
+  background-color: #64c4ed;
 }
 
 .bookmark-card {
-  margin: 1rem;
+  margin: 1.5rem;
   padding: .5rem;
-  border: #444 solid .2rem;
+  background-color: #f0d78c;
 }
 
-.hidden {
-  display: none;
-  opacity: 0;
-}
 
 .bookmark-condensed {
   display: flex;
@@ -68,7 +108,7 @@ main {
   font-size: 1.25rem;
   border: none;
   color: salmon;
-  background-color: antiquewhite;
+  background-color: #f0d78c;
 }
 
 #cancelBtn, #submitBtn {
