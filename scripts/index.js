@@ -5,12 +5,16 @@ import store from './store.js';
 const main = function () {
   api.getBookmarks()
     .then((bookmarks) => {
-      bookmarks.forEach((bookmark) => store.addItem(bookmark));
+      bookmarks.forEach((bookmark) => {
+        store.addBookmark(bookmark);
+        console.log(bookmark);
+        
+      });
       bookmarksApp.render();
     })
-    .catch((error) => console.log(error)
-
-    );
+    .catch((error) => {
+      console.log(error);
+    });
 
   bookmarksApp.bindEventListeners();
   bookmarksApp.render();

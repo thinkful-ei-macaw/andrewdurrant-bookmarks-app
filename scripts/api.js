@@ -28,14 +28,14 @@ function getBookmarks(){
 
 // I should be passing in an object from the form
 function createBookmark(bookmark){
-  const newBookmark = JSON.stringify(bookmark);
+  // const newBookmark = JSON.stringify(bookmark);
     
   return listApiFetch( `${BASE_URL}/bookmarks`,{
     method: 'POST',
     headers: {
       'Content-Type':'application/json'
     },
-    body: newBookmark
+    body: bookmark
   });
 }
 

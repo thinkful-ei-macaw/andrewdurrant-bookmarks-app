@@ -4,12 +4,12 @@ import api from './api.js';
 
 
 // Generate Functions:
-const generateLandingPage = function () {
+const generateLandingPage = function (bookmarks) {
   // Initial page load of .actions and image
   return `
     <h1 class="app-name">My Bookmarks</h1>
-    <article class="actions">
-      <button class="add-bookmark-clicked">New Bookmark</button>
+    <article class="actions-box">
+      <button class="add-bookmark-btn">New Bookmark</button>
       <form class="rating-dropdown" action="">
         <label class="rating-label" for="rating">Minimum Rating</label>
         <select class="select-rating" id="rating" name="rating">
@@ -23,21 +23,41 @@ const generateLandingPage = function () {
     </article>
     <section class="bookmark-container">
     </section>
+    <section class="bookmark-section">
+      ${generateBookmarksString(bookmarks)}
+    </section>
+    ${generateNewBookmarkForm()}
   `; 
+};
+
+const generateBookmarksString = function (bookmarks) {
+  let bookmarksHtmlArray = bookmarks.map(bookmark => generateBookmarks(bookmark));
+  return bookmarksHtmlArray.join('');
+};
+
+const generateRatingString = function (rating) {
+  let starRating = [];
+  for(let i = 0; i < rating; i++) {
+    starRating.push('<i class="fas fa-star"></i>');
+  }
+  while(starRating.length < 5) {
+    starRating.push('<i class="far fa-star"></i>');
+  }
+  return starRating.join('');
 };
 
 const generateBookmarks = function (bookmark) {
   return `
-  <article class="bookmark-card">
+  <article class="bookmark-card" data-id="${bookmark.id}">
     <div class="bookmark-condensed">
       <h4 class="title">${bookmark.title}</h4>
-      <span class="rating">${bookmark.rating}</span>
+      <span class="rating">${generateRatingString(bookmark.rating)}</span>
     </div>
     <div class="bookmark-expanded">
       <h4>Description</h4>
-      <p>${bookmark.description}</p>
+      <p>${bookmark.desc}</p>
       <div>
-        <h4><a href="#">${bookmark.url}</a></h4>
+        <h4><a href="${bookmark.url}" target="_blank">SITE</a></h4>
         <button class="delete-btn" name="delete"><i class="far fa-trash-alt"></i></i></button>
       </div>
     </div>
@@ -45,52 +65,52 @@ const generateBookmarks = function (bookmark) {
   `;
 };
 
-const generateNewBookmark = function () {
+const generateNewBookmarkForm = function () {
   return `
-  <section class="page add-bookmark">
-  <h1 class="app-name">My Bookmarks</h1>
-  <h3>Create New:</h3>
-  <form action="#" class="new-bookmark">
-      <div>
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" required>
-      </div>
-      <div>
-        <label for="url">URL:</label><br>
-        <input type="url" id="url" name="url" required>
-      </div>
-      <div>
-        <label for="description">Description:</label><br>
-        <textarea type="text" id="description" name="description" cols="200" rows="10" required></textarea>
-      </div>
-      <div class="radio-div">
-        <div class="radio-btn">
-          <input type="radio" id="5-star" name="rating" value="5" required>
-          <label for="5-star">5 Stars</label><br>
+  <section class="page add-bookmark hidden">
+    <h1 class="app-name">My Bookmarks</h1>
+    <h3>Create New:</h3>
+    <form action="#" class="new-bookmark" id="submitBookmarkForm">
+        <div>
+          <label for="title">Title:</label><br>
+          <input type="text" id="title" name="title" required>
         </div>
-        <div class="radio-btn">
-          <input type="radio" id="4-star" name="rating" value="4" required>
-          <label for="4-star">4 Stars</label><br>
+        <div>
+          <label for="url">URL:</label><br>
+          <input type="url" id="url" name="url" required>
         </div>
-        <div class="radio-btn">
-          <input type="radio" id="3-star" name="rating" value="3" required>
-          <label for="3-star">3 Stars</label><br>
+        <div>
+          <label for="description">Description:</label><br>
+          <textarea type="text" id="description" name="desc" cols="200" rows="10" required></textarea>
         </div>
-        <div class="radio-btn">
-          <input type="radio" id="2-star" name="rating" value="2" required>
-          <label for="2-star">2 Stars</label><br>
+        <div class="radio-div">
+          <div class="radio-btn">
+            <input type="radio" id="5-star" name="rating" value="5" required>
+            <label for="5-star">5 Stars</label><br>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" id="4-star" name="rating" value="4" required>
+            <label for="4-star">4 Stars</label><br>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" id="3-star" name="rating" value="3" required>
+            <label for="3-star">3 Stars</label><br>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" id="2-star" name="rating" value="2" required>
+            <label for="2-star">2 Stars</label><br>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" id="1-star" name="rating" value="1" required>
+            <label for="1-star">1 Star</label>
+          </div>
         </div>
-        <div class="radio-btn">
-          <input type="radio" id="1-star" name="rating" value="1" required>
-          <label for="1-star">1 Star</label>
-        </div>
-      </div>
-    <button id="submitBtn" type="submit">Submit</button>
-    <button id="cancelBtn" type="button">Cancel</button>
-  </form>
-</section>
+      <button id="submitBtn" type="submit">Submit</button>
+      <button id="cancelBtn" type="button">Cancel</button>
+    </form>
+  </section>
   `;
-}
+};
 
 
 
@@ -99,66 +119,95 @@ const generateNewBookmark = function () {
 const handleNewBookmarkClicked = function () {
   // Renders form for new bookmark submission
   // This is done by changing bookmarks.newBookmarkClicked = true
-  $( 'main' ).on('click', '.add-bookmark-clicked', event => {
- 
+  $( 'main' ).on('click', '.add-bookmark-btn', () => {
+    $('.add-bookmark').toggleClass('hidden');
   });
 };
 
 const handleMinimumRatingClicked = function () {
   //This changes the value of store.bookmarks.ratingFilter to user selected
-  $( 'main' ).on()
+  
 };
 
 const handleBookmarkClicked = function () {
   // This takes the class of hidden off of the div that surrounds description and url and delete btn
+  // $('.bookmark-section').on('click', '.bookmark-card', event => {
+  //   // get the index of the item in store.items
+  //   console.log('yes')
+  //   const id = getItemIdFromElement(event.currentTarget);
+  //   // delete the item
+  //   console.log(id);
+  // });
 };
 
-const handleNewBookmarSubmit = function () {
+// const getItemIdFromElement = function (item) {
+//   return $(item)
+//     .closest('.bookmark-card')
+//     .data('id');
+// };
+
+function serializeJson(form) {
+  const formData = new FormData(form[0]);
+  const o = {};
+  formData.forEach((val, name) => o[name] = val);
+  return JSON.stringify(o);
+}
+
+const handleNewBookmarkSubmit = function () {
   // This submits the form that turns into a fetch: POST
+  $( 'main' ).on('submit', '.new-bookmark', (e) => {
+    e.preventDefault();
+    let form = $('#submitBookmarkForm');
+    let formObject = serializeJson(form);
+    console.log(formObject);
+    
+    api.createBookmark(formObject)
+      .then((bookmark) => {
+        store.addBookmark(bookmark); 
+        render();
+      })
+      .catch((error) => {
+        store.setError(error.message);
+        render();
+        console.log('oops');
+      });
+  });
 };
 
 const handleCancelClicked = function () {
   // When cancel is clicked, we render the page after setting newBookmarkClicked back to false
-}
+  $( 'main' ).on('click', '#cancelBtn', () => {
+    $('.add-bookmark').toggleClass('hidden');
+  });
+};
 
 
 
 // Render Functions:
 const render = function () {
-
   let bookmarks = [...store.bookmarks];
-  let addBookmarkClicked = store.addBookmarkClicked;
   let error = store.error;
   let ratingFilter = store.ratingFilter;
 
-  const landingPage = generateLandingPage();
 
+  // Write a func that checks for error in store
+
+  const landingPage = generateLandingPage(bookmarks);
   $( 'main' ).html(landingPage);
-
-  if (bookmarks.newBookmarkClicked) {
-    const newBookmarkForm = generateNewBookmark();
-    $( 'main' ).html(newBookmarkForm);
-  }
-
-  if (bookmarks.length > 0) {
-    let bookmarksHtmlArray = bookmarks.map(bookmark => generateBookmarks(bookmark));
-    bookmarksHtmlArray.join(',');
-    $( '.bookmark-container' ).html(bookmarksHtmlArray);
-  }
-
-  
-
-
 };
 
 
 
 
 const bindEventListeners = function () {
-  // all of my handle functions
+  handleNewBookmarkClicked();
+  handleMinimumRatingClicked();
+  handleBookmarkClicked();
+  handleNewBookmarkSubmit();
+  handleCancelClicked();
 };
 
 export default{
   render,
   bindEventListeners
-}
+};
