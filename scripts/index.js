@@ -3,7 +3,7 @@ import api from './api.js';
 import store from './store.js';
 
 // This line is helpful for debugging in the console. 
-window.render = bookmarksApp.render;
+// window.render = bookmarksApp.render;
 
 const main = function () {
   api.getBookmarks()
