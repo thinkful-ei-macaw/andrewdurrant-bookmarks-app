@@ -161,3 +161,29 @@ h3 {
   font-size: 1rem;
   padding: 1rem;
 }
+
+/* Media Queries */
+
+@media only screen and (min-width: 700px) {
+  .app-name {
+    font-size: 3.5rem;
+  }
+  
+    h3 {
+      font-size: 2.5rem;
+    }
+  
+    textarea {
+      font-size: 1.2rem;
+    }
+  
+    input {
+      font-size: 1.2rem;
+    }
+  }
+  
+  @media only screen and (min-width: 1000px) {
+    .app-name {
+      font-size: 5rem;
+    }
+  }
