@@ -85,7 +85,6 @@ const generateBookmarks = function (bookmark) {
 const generateNewBookmarkForm = function () {
   return `
   <section class="add-bookmark">
-    <h1 class="app-name">My Bookmarks</h1>
     <h3>Create New</h3>
     <form action="#" class="new-bookmark" id="submitBookmarkForm">
       <div>
